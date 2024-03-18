@@ -1,49 +1,36 @@
-package com.example.contentproviderapp.presentation.audioscreen
+package com.example.contentproviderapp.presentation.audioscreen.components
 
 import android.net.Uri
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.contentproviderapp.presentation.audioscreen.components.AudioItem
-import com.example.contentproviderapp.presentation.audioscreen.components.AudioList
 import com.example.contentproviderapp.presentation.audioscreen.state.AudioState
 
 @Composable
-fun AudioScreen(audios: List<AudioState>, launchActivity: (input: String) -> Unit) {
-
+fun AudioList(audios: List<AudioState>) {
     Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        AudioList(audios = audios)
-        FloatingActionButton(
-            onClick = { launchActivity("audio/*") },
-            modifier = Modifier
-                .wrapContentSize()
-                .align(Alignment.End)
-                .padding(end = 20.dp, bottom = 20.dp)
-        ) {
-            Text("+")
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(0.9f)
+            .padding(top = 15.dp)
+    )
+    {
+        audios.forEach {
+            AudioItem(audio = it)
         }
+        if (audios.isEmpty()) Text("No audios")
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
-fun AudioScreenPreview() {
+fun AudioListPreview() {
 
     val audios = listOf(
         AudioState(
@@ -87,8 +74,5 @@ fun AudioScreenPreview() {
 
     )
 
-    AudioScreen(
-        audios = audios,
-        launchActivity = {}
-    )
+    AudioList(audios)
 }
