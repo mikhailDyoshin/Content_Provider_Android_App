@@ -1,10 +1,12 @@
 package com.example.contentproviderapp
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import com.example.contentproviderapp.presentation.audioscreen.AudioProviderViewModel
 import com.example.contentproviderapp.presentation.audioscreen.state.AudioState
 import com.example.contentproviderapp.ui.theme.ContentProviderAppTheme
@@ -51,6 +54,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(audios: List<AudioState>, launchActivity: (input: String) -> Unit) {
 
+    val context = LocalContext.current
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -58,7 +63,9 @@ fun Greeting(audios: List<AudioState>, launchActivity: (input: String) -> Unit) 
     ) {
         Column {
             audios.forEach {
-                Column {
+                Column(modifier = Modifier.clickable {
+                    Toast.makeText(context, it.uri.toString(), Toast.LENGTH_SHORT).show()
+                }) {
                     Text(text = it.name)
                     Text(text = it.artist)
                 }
