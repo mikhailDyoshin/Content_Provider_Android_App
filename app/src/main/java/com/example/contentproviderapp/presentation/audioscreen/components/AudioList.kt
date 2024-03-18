@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,20 +20,35 @@ import com.example.contentproviderapp.presentation.audioscreen.state.AudioState
 
 @Composable
 fun AudioList(audios: List<AudioState>, modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
-            .padding(top = 15.dp),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
-    )
-    {
-        audios.forEach {
-            AudioItem(audio = it)
+    if (audios.isEmpty()) {
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .padding(top = 15.dp),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text("No audios", fontSize = 26.sp)
         }
-        if (audios.isEmpty()) Text("No audios", fontSize = 26.sp)
+
+    } else {
+        LazyColumn(
+            modifier = modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .padding(top = 15.dp),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
+        )
+        {
+            items(audios.size) { index ->
+                AudioItem(audio = audios[index])
+            }
+
+        }
     }
+
 }
 
 @Preview(showSystemUi = true)
