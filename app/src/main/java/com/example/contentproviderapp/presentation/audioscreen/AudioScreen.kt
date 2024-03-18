@@ -1,11 +1,8 @@
 package com.example.contentproviderapp.presentation.audioscreen
 
 import android.net.Uri
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.FloatingActionButton
@@ -13,27 +10,27 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.contentproviderapp.presentation.audioscreen.components.AudioItem
 import com.example.contentproviderapp.presentation.audioscreen.components.AudioList
 import com.example.contentproviderapp.presentation.audioscreen.state.AudioState
 
 @Composable
-fun AudioScreen(audios: List<AudioState>, launchActivity: (input: String) -> Unit) {
+fun AudioScreen(
+    audios: List<AudioState>,
+    launchActivity: (input: String) -> Unit,
+    modifier: Modifier = Modifier
+) {
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+    Box(
+        modifier = modifier.fillMaxSize(),
     ) {
         AudioList(audios = audios)
         FloatingActionButton(
             onClick = { launchActivity("audio/*") },
             modifier = Modifier
                 .wrapContentSize()
-                .align(Alignment.End)
+                .align(Alignment.BottomEnd)
                 .padding(end = 20.dp, bottom = 20.dp)
         ) {
             Text("+")
@@ -83,9 +80,50 @@ fun AudioScreenPreview() {
             name = "For whom the bell tolls",
             artist = "Metallica",
             uri = Uri.EMPTY
+        ), AudioState(
+            id = 6L,
+            name = "Hardwired",
+            artist = "Metallica",
+            uri = Uri.EMPTY
+        ), AudioState(
+            id = 6L,
+            name = "Venom",
+            artist = "Eminem",
+            uri = Uri.EMPTY
+        ), AudioState(
+            id = 6L,
+            name = "Moth into the flame",
+            artist = "Metallica",
+            uri = Uri.EMPTY
+        ), AudioState(
+            id = 6L,
+            name = "Killing in the name",
+            artist = "Rage against the machine",
+            uri = Uri.EMPTY
+        ), AudioState(
+            id = 6L,
+            name = "Bulls on parade",
+            artist = "Rage against the machine",
+            uri = Uri.EMPTY
+        ), AudioState(
+            id = 6L,
+            name = "Walk this way",
+            artist = "Aerosmith",
+            uri = Uri.EMPTY
         )
-
     )
+
+    AudioScreen(
+        audios = audios,
+        launchActivity = {}
+    )
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun AudioScreenEmptyListPreview() {
+
+    val audios = emptyList<AudioState>()
 
     AudioScreen(
         audios = audios,
