@@ -1,26 +1,16 @@
 package com.example.contentproviderapp
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.example.contentproviderapp.presentation.audioscreen.AudioProviderViewModel
-import com.example.contentproviderapp.presentation.audioscreen.state.AudioState
+import com.example.contentproviderapp.presentation.audioscreen.AudioScreen
 import com.example.contentproviderapp.ui.theme.ContentProviderAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -41,7 +31,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting(
+                    AudioScreen(
                         audios = viewModel.audios.value,
                         launchActivity = { input -> selectAudioLauncher.launch(input) }
                     )
@@ -51,32 +41,4 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun Greeting(audios: List<AudioState>, launchActivity: (input: String) -> Unit) {
 
-    val context = LocalContext.current
-
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Column {
-            audios.forEach {
-                Column(modifier = Modifier.clickable {
-                    Toast.makeText(context, it.uri.toString(), Toast.LENGTH_SHORT).show()
-                }) {
-                    Text(text = it.name)
-                    Text(text = it.artist)
-                }
-            }
-            if (audios.isEmpty()) Text("No audios")
-        }
-        Button(
-            onClick = { launchActivity("audio/*") },
-            modifier = Modifier.wrapContentSize()
-        ) {
-            Text("Launch")
-        }
-    }
-}
