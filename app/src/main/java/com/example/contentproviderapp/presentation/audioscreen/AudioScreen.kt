@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.contentproviderapp.presentation.audioscreen.components.AudioItem
 import com.example.contentproviderapp.presentation.audioscreen.state.AudioState
 
 @Composable
@@ -30,16 +31,15 @@ fun AudioScreen(audios: List<AudioState>, launchActivity: (input: String) -> Uni
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(0.9f)) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.9f)
+                .padding(top = 15.dp)
+        )
+        {
             audios.forEach {
-                Column(modifier = Modifier.clickable {
-                    Toast.makeText(context, it.uri.toString(), Toast.LENGTH_SHORT).show()
-                }) {
-                    Text(text = it.name)
-                    Text(text = it.artist)
-                }
+                AudioItem(audio = it)
             }
             if (audios.isEmpty()) Text("No audios")
         }
@@ -71,7 +71,34 @@ fun AudioScreenPreview() {
             name = "Unforgiven",
             artist = "Metallica",
             uri = Uri.EMPTY
+        ),
+        AudioState(
+            id = 1L,
+            name = "New divide",
+            artist = "Linkin Park",
+            uri = Uri.EMPTY
+        ), AudioState(
+            id = 1L,
+            name = "Paranoid",
+            artist = "Black Sabbath",
+            uri = Uri.EMPTY
+        ), AudioState(
+            id = 1L,
+            name = "Rape me",
+            artist = "Nirvana",
+            uri = Uri.EMPTY
+        ), AudioState(
+            id = 1L,
+            name = "Mutter",
+            artist = "Rammstein",
+            uri = Uri.EMPTY
+        ), AudioState(
+            id = 1L,
+            name = "For whom the bell tolls",
+            artist = "Metallica",
+            uri = Uri.EMPTY
         )
+
     )
 
     AudioScreen(
